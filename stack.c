@@ -74,7 +74,7 @@ Riwayat Pop (adr_riwayat *top) {
 void printPesananList (adr_pesanan p) {
 	while (p != Nil){
         printf("%dx\t", p->data.jumlah);
-        printf("%d\n", p->data.hargaSatuan);
+        printf("Rp%d\n", p->data.hargaSatuan);
         printf("%s\n", p->data.namaMenu);
         p = p->next;
     }
