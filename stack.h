@@ -5,26 +5,41 @@
 #include "boolean.h"
 #include "linked.h"
 
-typedef struct Riwayat {
-    char namaPelanggan[50];
-    char layanan[10]; // "DineIn atau TakeAway"
-    int nomorMeja; // -1 jika TakeAway
-    adr_pesanan daftarPesanan;
-} Riwayat;
+typedef struct {
+    char namaMenu[50];
+    int qty;
+}Menu;
 
-typedef struct tNodeStack *adr_riwayat;
+typedef struct tNodeMenu *adr_menu;
+typedef struct tNodeMenu {
+    Menu info;
+    adr_menu next;
+}MenuStack;
+
+typedef struct {
+    adr_menu top;
+}Kategori;
+
+typedef struct tNodeStack *adr_stack;
 typedef struct tNodeStack {
-    Riwayat data;
-    adr_riwayat next;
+    Kategori data;
+    char kategoriNama[20];
+    adr_stack next;
 } NodeStack;
 
-void CreateStack (adr_riwayat *P);
-boolean is_Empty (adr_riwayat P);
-boolean is_Full (adr_riwayat P);
-adr_pesanan copyListPesanan(adr_pesanan head);
-void push(adr_riwayat *top, Riwayat data);
-Riwayat Pop (adr_riwayat *top);
-void printPesananList (adr_pesanan p);
-void printRiwayatUser(adr_riwayat Top, char namaCari[]);
+//STACK MENU (KATEGORI)
+void CreateKategori(Kategori *S);
+boolean isKategoriEmpty(Kategori S);
+void pushMenu(Kategori *S, Menu info);
+MenuStack popMenu(Kategori *S);
+void printStackKategori (Kategori S, const char *judulKategori);
+
+//STACK UTAMA
+void CreateStack (adr_stack *P);
+boolean is_Empty (adr_stack P);
+void copyListPesanan(adr_pesanan head, Kategori *S);
+void push(adr_stack *top, Kategori data, const char *kategoriNama);
+Kategori Pop (adr_stack *top);
+void printAllPesanan (adr_stack P);
 
 #endif

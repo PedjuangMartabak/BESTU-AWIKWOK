@@ -5,10 +5,12 @@
 #define LINKED_H
 #include<stdlib.h>
 #include<stdio.h>
+#include<time.h>
 #include "boolean.h"
 
 typedef struct Pesanan { 
     char namaMenu[50];
+    char kategori[20]; //"appetizer"/"main"/"dessert"
     int jumlah;
     int hargaSatuan;
 } Pesanan;
@@ -21,12 +23,15 @@ typedef struct tNodePesanan {
 
 typedef struct Pelanggan {
 	char namaPelanggan[50];
+    int noTelp;
+    int jmlOrang;
+    struct tm waktu;
 	adr_pesanan listPesanan;
 }Pelanggan;
 
-
 typedef struct tElmtlist *address;
 typedef struct tElmtlist {
+    adr_pesanan dataPesanan;
 	Pelanggan dataPelanggan;
 	address next;
 } NodeQueue;
