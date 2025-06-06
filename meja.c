@@ -3,10 +3,10 @@
 #include "meja.h"
 
 void InitMeja(Meja meja[]) {
+    int kapasitas_pattern[] = {2, 4, 6, 8}; // Lebih bervariasi
     for (int i = 0; i < MAX_MEJA; i++) {
         meja[i].nomor = i + 1;
-        // Atur kapasitas meja: 2, 4, atau 6 kursi
-        meja[i].kapasitas = 2 + (i % 3) * 2;
+        meja[i].kapasitas = kapasitas_pattern[i % 4];
         meja[i].isTersedia = true;
         strcpy(meja[i].jam_kosong, "00:00");
     }
@@ -40,12 +40,18 @@ boolean CariGabunganMeja(Meja meja[], int total_orang, int indeks_meja[], int *j
     int total_kapasitas = 0;
     *jumlah_meja = 0;
     
-    for (int i = 0; i < MAX_MEJA && total_kapasitas < total_orang; i++) {
-        if (meja[i].isTersedia) {
-            indeks_meja[(*jumlah_meja)++] = i;
-            total_kapasitas += meja[i].kapasitas;
+    // Prioritaskan meja besar terlebih dahulu
+    for (int i = 0; i < MAX_MEJA; i++) {
+        for (int j = 0; j < MAX_MEJA; j++) {
+            if (meja[j].isTersedia && meja[j].kapasitas == (8 - i*2)) {
+                indeks_meja[(*jumlah_meja)++] = j;
+                total_kapasitas += meja[j].kapasitas;
+                if (total_kapasitas >= total_orang) {
+                    return true;
+                }
+                break;
+            }
         }
     }
-    
-    return (total_kapasitas >= total_orang);
+    return false;
 }
