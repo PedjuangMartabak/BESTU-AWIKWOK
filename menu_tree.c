@@ -10,7 +10,9 @@ address CreateNode (const char* name, int isItem, float price) {
 	strcpy(newNode->name, name);
     newNode->isItem = isItem;
     newNode->price = price;
-    newNode->fs = newNode->nb = newNode->pr = Nil;
+    newNode->fs = Nil;
+    newNode->nb = Nil;
+    newNode->pr = Nil;
     return newNode;
 }
 
@@ -86,6 +88,13 @@ void InsertMenu(address *root) {
         parent->fs = newNode;
         printf("Input telah dimasukkan di bawah %s.\n", category);
     }
+    FILE *fp = fopen("menu.txt", "w");
+    if (fp != Nil) {
+        File_SaveTree(*root, fp);
+        fclose(fp);
+    } else {
+        printf("Gagal menyimpan menu ke file.\n");
+    }
 }
 
 void DeleteMenu(address *root, const char *name) {
@@ -108,6 +117,62 @@ void DeleteMenu(address *root, const char *name) {
     }
     free(target);
     printf("Telah menghapus %s.\n", name);
+    
+    FILE *fp = fopen("menu.txt", "w");
+    if (fp != Nil) {
+        File_SaveTree(*root, fp); 
+        fclose(fp);
+    } else {
+        printf("Gagal menyimpan menu ke file.\n");
+    }
 }
 
-/*      == FILING SING PUSINKK ==    tba    */
+void File_SaveTree (address root, FILE *fp) {
+    if (root == Nil || fp == Nil) return;
+    fprintf(fp, "%s|%d|%.2f\n", root->name, root->isItem, root->price);
+    File_SaveTree(root->fs, fp);
+    fprintf(fp, "END\n");
+    File_SaveTree(root->nb, fp);
+}
+
+address File_LoadTreeHelper(FILE *fp, address parent) {
+    char line[100];
+    address head = Nil, prev = Nil;
+
+    while (fgets(line, sizeof(line), fp)) {
+        line[strcspn(line, "\n")] = 0;
+        if (strcmp(line, "END") == 0) {
+            return head;
+        }
+        char name[50];
+        int isItem;
+        float price;
+        if (sscanf(line, " %[^|]|%d|%f", name, &isItem, &price) != 3) {
+            printf("Invalid line: %s\n", line);
+            continue;
+        }
+        address newNode = CreateNode(name, isItem, price);
+        newNode->pr = parent;
+        if (head == Nil) {
+            head = newNode;
+        } else {
+            prev->nb = newNode;
+        }
+        if (!isItem) {
+            newNode->fs = File_LoadTreeHelper(fp, newNode);
+        }
+        prev = newNode;
+    }
+    return head;
+}
+
+address File_LoadTree(const char *filename) {
+    FILE *fp = fopen(filename, "r");
+    if (fp == Nil) {
+        printf("File tidak ditemukan.\n");
+        return Nil;
+    }
+    address root = File_LoadTreeHelper(fp, Nil);
+    fclose(fp);
+    return root;
+}

@@ -1,0 +1,26 @@
+Menu|0|0.0
+Foods|0|0.0
+Appetizer|0|0.0
+Spring Rolls|1|12000.0
+Soup|1|10000.0
+END
+Main Course|0|0.0
+Burger|1|25000.0
+Pasta|1|30000.0
+END
+Dessert|0|0.0
+Cake|1|15000.0
+Ice Cream|1|12000.0
+END
+END
+Drinks|0|0.0
+Hot|0|0.0
+Coffee|1|10000.0
+Tea|1|8000.0
+END
+Ice|0|0.0
+Iced Coffee|1|12000.0
+Iced Tea|1|10000.0
+END
+END
+END

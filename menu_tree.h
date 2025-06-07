@@ -19,5 +19,8 @@ void PostOrder(address node);
 void PrintTree(address node, int level);
 void InsertMenu(address *root);
 void DeleteMenu(address *root, const char *name);
+void File_SaveTree (address root, FILE *fp);
+address File_LoadTreeHelper(FILE *fp, address parent);
+address File_LoadTree(const char *filename);
 
 #endif
