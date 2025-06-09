@@ -14,12 +14,14 @@ boolean isKategoriEmpty(Kategori S) {
 
 void pushMenu(Kategori *S, Menu info) {
     adr_menu newNode = (adr_menu) malloc(sizeof(MenuStack));
-    if (newNode != Nil) {
-        strcpy(newNode->info.namaMenu, info.namaMenu);
-        newNode->info.qty = info.qty;
-        newNode->next = S->top;
-        S->top = newNode;
+    if (!newNode) {
+        printf("Memory allocation failed!\n");
+        return;
     }
+    strcpy(newNode->info.namaMenu, info.namaMenu);
+    newNode->info.qty = info.qty;
+    newNode->next = S->top;
+    S->top = newNode;
 }
 
 MenuStack popMenu(Kategori *S) {

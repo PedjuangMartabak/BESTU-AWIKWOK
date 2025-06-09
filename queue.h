@@ -2,7 +2,33 @@
 #define QUEUE_H
 
 #include "boolean.h"
-#include "linked.h"
+
+typedef struct Pesanan { 
+    char namaMenu[50];
+    char kategori[20]; //"appetizer"/"main"/"dessert"
+    int jumlah;
+    int hargaSatuan;
+} Pesanan;
+
+typedef struct tNodePesanan *adr_pesanan;
+typedef struct tNodePesanan {
+    Pesanan data;
+    adr_pesanan next;
+} NodePesanan;
+
+typedef struct Pelanggan {
+	char namaPelanggan[50];
+    int noTelp[15];
+    int total_orang;
+    char jam_kedatangan[6];
+	adr_pesanan listPesanan;
+}Pelanggan;
+
+typedef struct tElmtlist *address;
+typedef struct tElmtlist {
+	Pelanggan dataPelanggan;
+	address next;
+} NodeQueue;
 
 typedef struct {
     address front;

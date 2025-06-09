@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "boolean.h"
-#include "linked.h"
+#include "queue.h"
 
 typedef struct {
     char namaMenu[50];

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <queue.h>
-#include <linked.h>
 
 void CreatePriorityQueue(PriorityQueue *Q){
     Q->front = NULL;
