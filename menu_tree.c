@@ -97,6 +97,13 @@ void InsertMenu(address *root) {
     }
 }
 
+void DeleteSubtree(address node) {
+    if (node == Nil) return;
+    DeleteSubtree(node->fs);
+    DeleteSubtree(node->nb);
+    free(node);
+}
+
 void DeleteMenu(address *root, const char *name) {
     if (root == Nil || *root == Nil) return;
     address target = SearchMenu(*root, name);
@@ -112,9 +119,7 @@ void DeleteMenu(address *root, const char *name) {
     if (*ptr == target) {
         *ptr = target->nb;
     }
-    while (target->fs != Nil) {
-        DeleteMenu(&(target->fs), target->fs->name);
-    }
+    DeleteSubtree(target->fs);
     free(target);
     printf("Telah menghapus %s.\n", name);
     
@@ -127,11 +132,16 @@ void DeleteMenu(address *root, const char *name) {
     }
 }
 
-void File_SaveTree (address root, FILE *fp) {
+void File_SaveTree(address root, FILE *fp) {
     if (root == Nil || fp == Nil) return;
+    
     fprintf(fp, "%s|%d|%.2f\n", root->name, root->isItem, root->price);
-    File_SaveTree(root->fs, fp);
-    fprintf(fp, "END\n");
+    
+    if (root->fs != Nil) {
+        File_SaveTree(root->fs, fp);
+        fprintf(fp, "END\n");
+    }
+
     File_SaveTree(root->nb, fp);
 }
 

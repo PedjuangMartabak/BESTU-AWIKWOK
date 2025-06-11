@@ -1,26 +1,35 @@
-Menu|0|0.0
-Foods|0|0.0
-Appetizer|0|0.0
-Spring Rolls|1|12000.0
-Soup|1|10000.0
+Menu|0|0.00
+Makanan|0|0.00
+Appetizer|0|0.00
+Sate Wagyu|1|40000.00
+Kroket Singkong Keju|1|90000.00
+Karedok Caviar|1|220000.00
+Scallop Cabe Ijo|1|160000.00
+Otak otak Salmon|1|120000.00
 END
-Main Course|0|0.0
-Burger|1|25000.0
-Pasta|1|30000.0
+Main Course|0|0.00
+Rendang Wagyu|1|310000.00
+Gule Kambing|1|190000.00
+Lobster Geprek|1|220000.00
+Wellington Penyet|1|260000.00
+King Crab Rica rica|1|340000.00
 END
-Dessert|0|0.0
-Cake|1|15000.0
-Ice Cream|1|12000.0
+Dessert|0|0.00
+Pancake Durian|1|80000.00
+Tart Pisang|1|110000.00
+Sorbet Mangga|1|60000.00
 END
 END
-Drinks|0|0.0
-Hot|0|0.0
-Coffee|1|10000.0
-Tea|1|8000.0
+Minuman|0|0.00
+Hot|0|0.00
+Kopi Luwak|1|60000.00
+Teh Oolong|1|55000.00
+Susu Kambing|1|40000.00
 END
-Ice|0|0.0
-Iced Coffee|1|12000.0
-Iced Tea|1|10000.0
+Ice|0|0.00
+Mojito Blewah|1|45000.00
+Mocktail Semangka|1|50000.00
+Es Arak Bali|1|65000.00
 END
 END
 END
