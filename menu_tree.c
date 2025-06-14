@@ -5,8 +5,8 @@
 #include "menu_tree.h"
 #include "boolean.h"
 
-address CreateNode (const char* name, int isItem, float price) {
-	address newNode = (address)malloc(sizeof(MenuNode));
+treeAddress CreateNode (const char* name, int isItem, float price) {
+	treeAddress newNode = (treeAddress)malloc(sizeof(MenuNode));
 	strcpy(newNode->name, name);
     newNode->isItem = isItem;
     newNode->price = price;
@@ -16,29 +16,29 @@ address CreateNode (const char* name, int isItem, float price) {
     return newNode;
 }
 
-address SearchMenu (address root, const char *name) {
+treeAddress SearchMenu (treeAddress root, const char *name) {
 	if (root == Nil) return Nil;
 	if (strcmp(root->name, name) == 0) return root;
-	address found = SearchMenu(root->fs, name);
+	treeAddress found = SearchMenu(root->fs, name);
     if (found != Nil) return found;
     return SearchMenu(root->nb, name);
 }
 
-void PreOrder(address node) {
+void PreOrder(treeAddress node) {
     if (node == Nil) return;
     printf("%s\n", node->name);
     PreOrder(node->fs);
     PreOrder(node->nb);
 }
 
-void PostOrder(address node) {
+void PostOrder(treeAddress node) {
     if (node == Nil) return;
     PostOrder(node->fs);
     PostOrder(node->nb);
     printf("%s\n", node->name);
 }
 
-void PrintTree(address node, int level) {
+void PrintTree(treeAddress node, int level) {
     if (node == Nil) return;
     for (int i = 0; i < level; i++) printf("  ");
     if (node->isItem)
@@ -49,7 +49,7 @@ void PrintTree(address node, int level) {
     PrintTree(node->nb, level);
 }
 
-void InsertMenu(address *root) {
+void InsertMenu(treeAddress *root) {
     char name[50], category[50];
     int isItem;
     float price = 0.0;
@@ -69,20 +69,20 @@ void InsertMenu(address *root) {
             *root = CreateNode(name, isItem, price);
             printf("Menu telah dibuat sebagai root.\n");
         } else {
-            address newNode = CreateNode(name, isItem, price);
+            treeAddress newNode = CreateNode(name, isItem, price);
             newNode->nb = (*root)->fs;
             newNode->pr = *root;
             (*root)->fs = newNode;
             printf("Input telah dimasukkan di bawah root.\n");
         }
     } else {
-        address parent = SearchMenu(*root, category);
+        treeAddress parent = SearchMenu(*root, category);
         if (parent == Nil) {
             printf("Kategori tidak ditemukan.\n");
             return;
         }
 
-        address newNode = CreateNode(name, isItem, price);
+        treeAddress newNode = CreateNode(name, isItem, price);
         newNode->nb = parent->fs;
         newNode->pr = parent;
         parent->fs = newNode;
@@ -97,22 +97,22 @@ void InsertMenu(address *root) {
     }
 }
 
-void DeleteSubtree(address node) {
+void DeleteSubtree(treeAddress node) {
     if (node == Nil) return;
     DeleteSubtree(node->fs);
     DeleteSubtree(node->nb);
     free(node);
 }
 
-void DeleteMenu(address *root, const char *name) {
+void DeleteMenu(treeAddress *root, const char *name) {
     if (root == Nil || *root == Nil) return;
-    address target = SearchMenu(*root, name);
+    treeAddress target = SearchMenu(*root, name);
     if (target == Nil || target == *root) {
         printf("Tidak bisa menghapus root atau node yang tidak ada.\n");
         return;
     }
-    address parent = target->pr;
-    address *ptr = &(parent->fs);
+    treeAddress parent = target->pr;
+    treeAddress *ptr = &(parent->fs);
     while (*ptr != Nil && *ptr != target) {
         ptr = &((*ptr)->nb);
     }
@@ -132,7 +132,7 @@ void DeleteMenu(address *root, const char *name) {
     }
 }
 
-void File_SaveTree(address root, FILE *fp) {
+void File_SaveTree(treeAddress root, FILE *fp) {
     if (root == Nil || fp == Nil) return;
     
     fprintf(fp, "%s|%d|%.2f\n", root->name, root->isItem, root->price);
@@ -145,9 +145,9 @@ void File_SaveTree(address root, FILE *fp) {
     File_SaveTree(root->nb, fp);
 }
 
-address File_LoadTreeHelper(FILE *fp, address parent) {
+treeAddress File_LoadTreeHelper(FILE *fp, treeAddress parent) {
     char line[100];
-    address head = Nil, prev = Nil;
+    treeAddress head = Nil, prev = Nil;
 
     while (fgets(line, sizeof(line), fp)) {
         line[strcspn(line, "\n")] = 0;
@@ -161,7 +161,7 @@ address File_LoadTreeHelper(FILE *fp, address parent) {
             printf("Invalid line: %s\n", line);
             continue;
         }
-        address newNode = CreateNode(name, isItem, price);
+        treeAddress newNode = CreateNode(name, isItem, price);
         newNode->pr = parent;
         if (head == Nil) {
             head = newNode;
@@ -176,13 +176,13 @@ address File_LoadTreeHelper(FILE *fp, address parent) {
     return head;
 }
 
-address File_LoadTree(const char *filename) {
+treeAddress File_LoadTree(const char *filename) {
     FILE *fp = fopen(filename, "r");
     if (fp == Nil) {
         printf("File tidak ditemukan.\n");
         return Nil;
     }
-    address root = File_LoadTreeHelper(fp, Nil);
+    treeAddress root = File_LoadTreeHelper(fp, Nil);
     fclose(fp);
     return root;
 }
