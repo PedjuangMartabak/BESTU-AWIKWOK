@@ -1,8 +1,8 @@
-/* File        : linked.h */
-/* Deskripsi   : header file ADT linked list dengan representasi fisik pointer */
+/* File        : pesanan.h */
+/* Deskripsi   : header file ADT linked list dengan representasi fisik pointer untuk pesanan */
 
-#ifndef LINKED_H
-#define LINKED_H
+#ifndef PESANAN_H
+#define PESANAN_H
 #include<stdlib.h>
 #include<stdio.h>
 #include "boolean.h"
