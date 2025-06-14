@@ -13,12 +13,13 @@ extern adr_pesanan First;
 boolean isEmpty(adr_pesanan p);
 void Create_Node (adr_pesanan *p);
 void Isi_Node (adr_pesanan *p , Pesanan nilai);
-void Print_List (adr_pesanan p);
+void printPesananList (adr_pesanan p);
+void addPesanan (adr_pesanan *First, Pesanan nilai);
 
-void Insert_AtFirst (adr_pesanan *First, Pesanan nilai);
-void Insert_AtLast (adr_pesanan *First, Pesanan nilai);
-
-void Delete_Value(adr_pesanan *First, Pesanan target);
-void Delete_All(adr_pesanan *First);
+void deletePesanan(adr_pesanan *First, char namaMenu[]);
+void deleteAll(adr_pesanan *First);
+adr_pesanan findPesanan(adr_pesanan p, char namaMenu[]);
+void updateQtyPesanan(adr_pesanan First, char namaMenu[], int jumlahBaru);
+int countTotalHarga(adr_pesanan p);
 
 #endif
