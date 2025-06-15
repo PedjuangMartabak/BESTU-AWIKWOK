@@ -36,7 +36,7 @@ int main() {
     CreateStack(&stackAntar);
 
     Meja tables[MAX_MEJA];
-    InitMeja(&tables);
+    InitMeja(tables);
 
     do {
         MainMenuDisplay();
@@ -45,16 +45,21 @@ int main() {
 
         switch (opt) {
             case 1:
-                inputReservasi(menuroot, &antreanReservasi, &tables, &listOrderan); //MASIH PUSINKKKKKKKKKK
+            	printf("Tambah Reservasi\n");
+                inputReservasi(menuroot, &antreanReservasi, tables, &listOrderan);
                 break;
             case 2:
-                masukkanListKeStack(&listOrderan, &stackAntar); //MASIH PUSINKKKKKKKKKK
+            	printf("Proses Kedatangan\n");
+                prosesKedatangan(&antreanReservasi, &stackAntar, tables);
                 break;
             case 3:
+            	printf("Proses Pengantaran Makanan\n");
                 break;
             case 4:
+            	printf("Cetak Bills\n");
                 break;
             case 5: 
+            	printAllQueue(antreanReservasi);
                 break;
             case 6:
                 ManageMenu(menuroot);

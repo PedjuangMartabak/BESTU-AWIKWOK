@@ -15,4 +15,9 @@ void PushCategory (adr_stack *orders, treeAddress menuItem, int qty);
 void getOrder (treeAddress root, adr_pesanan *listPesanan);
 void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesanan *ListP);
 void masukkanListKeStack (adr_pesanan listP, adr_stack *stackP);
+void printAllQueue(PriorityQueue Q);
+void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]);
+void printSemuaStackMeja(Meja meja[]);
+void prosesPengantaran (Meja meja []);
+
 #endif

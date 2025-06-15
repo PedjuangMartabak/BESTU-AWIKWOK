@@ -1,18 +1,18 @@
-# Project: Project1
+# Project: Restoran
 # Makefile created by Embarcadero Dev-C++ 6.3
 
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = linked.o stack.o menu_tree.o
-LINKOBJ  = linked.o stack.o menu_tree.o
+OBJ      = main.o meja.o menu_tree.o pesanan.o queue.o sistemresto.o stack.o
+LINKOBJ  = main.o meja.o menu_tree.o pesanan.o queue.o sistemresto.o stack.o
 LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
 CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
-BIN      = Restaurant.exe
+BIN      = Restoran.exe
 CXXFLAGS = $(CXXINCS) 
 CFLAGS   = $(INCS) 
-DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\DevCpp.exe INTERNAL_DEL
+DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -22,13 +22,25 @@ clean: clean-custom
 	${DEL} $(OBJ) $(BIN)
 
 $(BIN): $(OBJ)
-	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-linked.o: linked.c
-	$(CPP) -c linked.c -o linked.o $(CXXFLAGS)
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
 
-stack.o: stack.c
-	$(CPP) -c stack.c -o stack.o $(CXXFLAGS)
+meja.o: meja.c
+	$(CC) -c meja.c -o meja.o $(CFLAGS)
 
 menu_tree.o: menu_tree.c
-	$(CPP) -c menu_tree.c -o menu_tree.o $(CXXFLAGS)
+	$(CC) -c menu_tree.c -o menu_tree.o $(CFLAGS)
+
+pesanan.o: pesanan.c
+	$(CC) -c pesanan.c -o pesanan.o $(CFLAGS)
+
+queue.o: queue.c
+	$(CC) -c queue.c -o queue.o $(CFLAGS)
+
+sistemresto.o: sistemresto.c
+	$(CC) -c sistemresto.c -o sistemresto.o $(CFLAGS)
+
+stack.o: stack.c
+	$(CC) -c stack.c -o stack.o $(CFLAGS)

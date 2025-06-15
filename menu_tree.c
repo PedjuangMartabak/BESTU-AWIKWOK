@@ -217,6 +217,7 @@ void CariMenu (treeAddress root) {
 
 void ManageMenu (treeAddress root) {
     int choice;
+    char name[50];
     do {
         displayManageMenu();
         scanf("%d", &choice);
@@ -227,7 +228,6 @@ void ManageMenu (treeAddress root) {
                 InsertMenu(&root);
                 break;
             case 2:
-                char name[50];
                 printf("Masukkan nama yang ingin dihapus: ");
                 scanf(" %[^\n]", name);
                 DeleteMenu(&root, name);
