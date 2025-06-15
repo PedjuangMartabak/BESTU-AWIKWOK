@@ -16,7 +16,7 @@ typedef struct {
 #define MAX_MEJA 20
 #define DURASI_RESERVASI 2 // Durasi dalam jam
 
-void InitMeja(Meja meja[]);
+void InitMeja(Meja (*meja)[MAX_MEJA]);
 void PrintMeja(Meja meja[]);
 boolean CariMejaTunggal(Meja meja[], int total_orang, int *indeks);
 boolean CariGabunganMeja(Meja meja[], int total_orang, int indeks_meja[], int *jumlah_meja);

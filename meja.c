@@ -2,14 +2,14 @@
 #include <string.h>
 #include "meja.h"
 
-void InitMeja(Meja meja[]) {
-    int kapasitas_pattern[] = {2, 4, 6, 8}; // Lebih bervariasi
+void InitMeja(Meja (*meja)[MAX_MEJA]) {
+    int kapasitas_pattern[] = {2, 4, 6, 8};
     for (int i = 0; i < MAX_MEJA; i++) {
-        meja[i].nomor = i + 1;
-        meja[i].kapasitas = kapasitas_pattern[i % 4];
-        meja[i].isTersedia = true;
-        strcpy(meja[i].jam_kosong, "00:00");
-        meja[i].stackPesanan = NULL;
+        (*meja)[i].nomor = i + 1;
+        (*meja)[i].kapasitas = kapasitas_pattern[i % 4];
+        (*meja)[i].isTersedia = true;
+        strcpy((*meja)[i].jam_kosong, "00:00");
+        (*meja)[i].stackPesanan = NULL;
     }
 }
 
