@@ -8,7 +8,6 @@
 typedef struct {
     char namaMenu[50];
     int qty;
-    int harga;
 }Menu;
 
 typedef struct tNodeMenu *adr_menu;
