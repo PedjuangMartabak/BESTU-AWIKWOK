@@ -57,26 +57,32 @@ boolean CariGabunganMeja(Meja meja[], int total_orang, int indeks_meja[], int *j
     return false;
 }
 
-void TambahPesananKeMeja(Meja *meja, Menu pesanan) {
+void TambahPesananKeMeja(Meja *meja, Pesanan pesanan) {
     if (!meja->isTersedia) {
         adr_stack current = meja->stackPesanan;
-        const char* kategori = pesanan.kategori;
+        const char* kategori = pesanan.kategori;  // Misal: "Appetizer"
         while (current != NULL && strcmp(current->kategoriNama, kategori) != 0) {
             current = current->next;
         }
         
+        //Error Handle Buat stack baru jika kategori belum ada
         if (current == NULL) {
             Kategori newKategori;
             CreateKategori(&newKategori);
-            pushMenu(&newKategori, pesanan);
+            pushMenu(&newKategori, (Menu){.qty = pesanan.jumlah});
+            strcpy(newKategori.top->info.namaMenu, pesanan.namaMenu);
             push(&meja->stackPesanan, newKategori, kategori);
         } else {
-            pushMenu(&current->data, pesanan);
+            Menu m;
+            strcpy(m.namaMenu, pesanan.namaMenu);
+            m.qty = pesanan.jumlah;
+            pushMenu(&current->data, m);
         }
     }
 }
 
-void TambahPesananKeGabunganMeja(Meja meja[], int indeks_meja[], int jumlah_meja, Menu pesanan) {
+
+void TambahPesananKeGabunganMeja(Meja meja[], int indeks_meja[], int jumlah_meja, Pesanan pesanan) {
     for (int i = 0; i < jumlah_meja; i++) {
         TambahPesananKeMeja(&meja[indeks_meja[i]], pesanan);
     }
