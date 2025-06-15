@@ -186,3 +186,69 @@ treeAddress File_LoadTree(const char *filename) {
     fclose(fp);
     return root;
 }
+
+void displayManageMenu() {
+    printf("\nManajemen Tree Menu\n");
+    printf("1. Buat/Tambah Item/Kategori Menu\n");
+    printf("2. Hapus Item/Kategori Menu\n");
+    printf("3. Pencarian Item/Kategori Menu\n");
+    printf("4. Cetak Tree (Pre-order)\n");
+    printf("5. Cetak Tree (Rapi)\n");
+    printf("6. Kembali\n");
+    printf("Pilihan: ");
+}
+
+void CariMenu (treeAddress root) {
+    char name[50];
+    printf("Cari: ");
+    scanf(" %[^\n]", name);
+    treeAddress found = SearchMenu(root, name);
+    if (found != Nil) {
+        printf("Ditemukan: %s\n", found->name);
+        if (found->isItem) {
+            printf("Harga: Rp%.2f\n", found->price);
+        } else {
+            printf("sebagai kategori.\n");
+        }
+    } else {
+        printf("%s tidak ditemukan di menu tree.\n", name);
+    }
+}
+
+void ManageMenu (treeAddress root) {
+    int choice;
+    do {
+        displayManageMenu();
+        scanf("%d", &choice);
+        getchar();
+
+        switch (choice) {
+            case 1:
+                InsertMenu(&root);
+                break;
+            case 2:
+                char name[50];
+                printf("Masukkan nama yang ingin dihapus: ");
+                scanf(" %[^\n]", name);
+                DeleteMenu(&root, name);
+                break;
+            case 3:
+                CariMenu(root);
+                break;
+            case 4:
+                printf("Traversal Preorder:\n");
+                PreOrder(root);
+                break;
+            case 5:
+                PrintTree(root, 0);
+                break;
+            case 6:
+                printf("Kembali ke menu utama...\n");
+                break;
+            default:
+                printf("Pilihan tidak valid, coba lagi.\n");
+        }
+    } while (choice != 6);
+
+    return 0;
+}

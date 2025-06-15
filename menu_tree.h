@@ -25,4 +25,8 @@ void File_SaveTree (treeAddress root, FILE *fp);
 treeAddress File_LoadTreeHelper(FILE *fp, treeAddress parent);
 treeAddress File_LoadTree(const char *filename);
 
+void displayManageMenu();
+void CariMenu (treeAddress root);
+void ManageMenu (treeAddress root);
+
 #endif

@@ -13,7 +13,7 @@ void findMatch (treeAddress node, const char* input, treeAddress hasil[], int *c
 treeAddress inputItem (treeAddress root);
 void PushCategory (adr_stack *orders, treeAddress menuItem, int qty);
 void getOrder (treeAddress root, adr_pesanan *listPesanan);
-void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[]);
+void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesanan *ListP);
 void masukkanListKeStack (adr_pesanan listP, adr_stack *stackP);
 
 #endif

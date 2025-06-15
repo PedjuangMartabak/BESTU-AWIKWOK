@@ -124,7 +124,7 @@ void getOrder (treeAddress root, adr_pesanan *listPesanan) {
     printPesananList(*listPesanan);
 }
 
-void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[]) {
+void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesanan *ListP) {
     Pelanggan p;
     char nomorHp[20];
     int indeksTunggal = -1, jumlahGabungan = 0, indeksGabungan[MAX_MEJA];
