@@ -252,15 +252,3 @@ void ManageMenu (treeAddress root) {
 
     return 0;
 }
-
-//ini buat nyari kategori kaya appetizer dll
-const char* getParentCategory(treeAddress item) {
-    if (item == NULL || item->pr == NULL) return "UNKNOWN";
-    
-    // Traverse ke parent sampai level kategori utama
-    while (item->pr != NULL && item->pr->pr != NULL) {
-        item = item->pr;
-    }
-    return item->pr->name;  
-}
-

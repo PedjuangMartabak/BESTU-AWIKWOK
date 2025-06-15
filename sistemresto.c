@@ -90,34 +90,6 @@ void PushCategory (adr_stack *orders, treeAddress menuItem, int qty) {
     printf("✓ %s (%d) ditambahkan ke pesanan.\n", menuItem->name, qty);
 }
 
-//Buat push ke stack
-void PushToCategoryStack(adr_stack *orders, treeAddress menuItem, int qty) {
-    if (menuItem == NULL) return;
-
-    // 1. Dapatkan kategori dari tree
-    const char* kategori = getParentCategory(menuItem);
-    // 2. Cari atau buat stack kategori
-    adr_stack current = *orders;
-    while (current != NULL && strcmp(current->kategoriNama, kategori) != 0) {
-        current = current->next;
-    }
-    // 3. Buat Menu dan push
-    Menu m;
-    strcpy(m.namaMenu, menuItem->name);
-    m.qty = qty;
-    m.harga = (int)menuItem->price;
-    strcpy(m.kategori, kategori);
-
-    if (current == NULL) {
-        Kategori newKategori;
-        CreateKategori(&newKategori);
-        pushMenu(&newKategori, m);
-        push(orders, newKategori, kategori);
-    } else {
-        pushMenu(&current->data, m);
-    }
-}
-
 void getOrder (treeAddress root, adr_pesanan *listPesanan) {
     if (root == Nil) {
         printf("Menu kosong.\n");
