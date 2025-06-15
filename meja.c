@@ -9,6 +9,7 @@ void InitMeja(Meja meja[]) {
         meja[i].kapasitas = kapasitas_pattern[i % 4];
         meja[i].isTersedia = true;
         strcpy(meja[i].jam_kosong, "00:00");
+        meja[i].stackPesanan = NULL;
     }
 }
 
@@ -54,4 +55,29 @@ boolean CariGabunganMeja(Meja meja[], int total_orang, int indeks_meja[], int *j
         }
     }
     return false;
+}
+
+void TambahPesananKeMeja(Meja *meja, Menu pesanan) {
+    if (!meja->isTersedia) {
+        adr_stack current = meja->stackPesanan;
+        const char* kategori = pesanan.kategori;
+        while (current != NULL && strcmp(current->kategoriNama, kategori) != 0) {
+            current = current->next;
+        }
+        
+        if (current == NULL) {
+            Kategori newKategori;
+            CreateKategori(&newKategori);
+            pushMenu(&newKategori, pesanan);
+            push(&meja->stackPesanan, newKategori, kategori);
+        } else {
+            pushMenu(&current->data, pesanan);
+        }
+    }
+}
+
+void TambahPesananKeGabunganMeja(Meja meja[], int indeks_meja[], int jumlah_meja, Menu pesanan) {
+    for (int i = 0; i < jumlah_meja; i++) {
+        TambahPesananKeMeja(&meja[indeks_meja[i]], pesanan);
+    }
 }
