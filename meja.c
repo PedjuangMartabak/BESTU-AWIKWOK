@@ -2,23 +2,24 @@
 #include <string.h>
 #include "meja.h"
 
-void InitMeja(Meja (*meja)[MAX_MEJA]) {
+void InitMeja(Meja meja[]) {
     int kapasitas_pattern[] = {2, 4, 6, 8};
     for (int i = 0; i < MAX_MEJA; i++) {
-        (*meja)[i].nomor = i + 1;
-        (*meja)[i].kapasitas = kapasitas_pattern[i % 4];
-        (*meja)[i].isTersedia = true;
-        strcpy((*meja)[i].jam_kosong, "00:00");
-        (*meja)[i].stackPesanan = NULL;
+        meja[i].nomor = i + 1;
+        meja[i].kapasitas = kapasitas_pattern[i % 4]; // Pengulangan pola
+        meja[i].isTersedia = true;
+        strcpy(meja[i].jam_kosong, "00:00");
+        meja[i].stackPesanan = NULL; // Stack pesanan kosong
     }
 }
 
 void PrintMeja(Meja meja[]) {
     printf("\n=== Daftar Meja ===\n");
     for (int i = 0; i < MAX_MEJA; i++) {
-        printf("Meja %2d: Kapasitas %d, Status: %s", 
-               meja[i].nomor, meja[i].kapasitas,
-               meja[i].isTersedia ? "Tersedia" : "Dipesan");
+        printf("Meja %2d: Kapasitas %d | Status: %s",
+               meja[i].nomor,
+               meja[i].kapasitas,
+               meja[i].isTersedia ? "Tersedia" : "Terisi");
         
         if (!meja[i].isTersedia) {
             printf(" (Sampai jam %s)", meja[i].jam_kosong);
