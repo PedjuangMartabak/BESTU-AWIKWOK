@@ -59,6 +59,8 @@
   "files.associations": {
     "stdio.h": "c",
     "typeinfo": "c",
-    "menu_tree.h": "c"
+    "menu_tree.h": "c",
+    "sistemresto.h": "c",
+    "string.h": "c"
   }
 }
