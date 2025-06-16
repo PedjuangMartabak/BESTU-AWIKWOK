@@ -290,6 +290,8 @@ void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
 	}
 	Pelanggan selected = current->dataPelanggan;
 	masukkanListKeStack(selected.listPesanan, stackP);
+	printf("\nDEBUG: Isi stackP setelah konversi dari list, sebelum clone ke meja:\n");
+	printAllPesanan(*stackP);
 	printf("Pesanan atas nama '%s' telah masuk daftar antar.\n", selected.namaPelanggan);
 	for (int i = 0; i < MAX_MEJA; i++) {
 	    if (!meja[i].isTersedia &&
@@ -297,6 +299,7 @@ void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
 	        meja[i].stackPesanan == Nil) {
 	
 	        meja[i].stackPesanan = cloneStack(*stackP);
+	        printf("DEBUG: Stack berhasil disalin ke meja %d\n", meja[i].nomor);
 	    }
 	}
 	if (prev == Nil) {
@@ -308,6 +311,14 @@ void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
 }
 
 void printSemuaStackMeja(Meja meja[]) {
+	printf("DEBUG: Status meja sebelum print stack:\n");
+	for (int i = 0; i < MAX_MEJA; i++) {
+	    printf("Meja %d - tersedia: %d, jam_kosong: %s, stack NULL: %d\n",
+	        meja[i].nomor,
+	        meja[i].isTersedia,
+	        meja[i].jam_kosong,
+	        meja[i].stackPesanan == NULL);
+	}
     printf("\nPesanan Per Meja:\n");
     for (int i = 0; i < MAX_MEJA; i++) {
         if (!meja[i].isTersedia && meja[i].stackPesanan != NULL) {
