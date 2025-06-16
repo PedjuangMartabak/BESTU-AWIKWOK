@@ -224,6 +224,50 @@ void printAllQueue(PriorityQueue Q) {
     }
 }
 
+Kategori clonePesananStack (Kategori original) {
+	Kategori temp;
+	CreateKategori(&temp);
+	Kategori reversed;
+	CreateKategori(&reversed);
+	adr_menu current = original.top;
+	while (current != Nil) {
+		pushMenu(&reversed, current->info);
+		current = current->next;
+	}
+	current = reversed.top;
+	while (current != Nil) {
+		pushMenu(&temp, current->info);
+		current = current->next;
+	}
+	return temp;
+}
+
+adr_stack cloneStack (adr_stack src) {
+	adr_stack head = Nil, tail = Nil;
+	
+	adr_stack reversed = Nil;
+    while (src != Nil) {
+        Kategori copied = clonePesananStack(src->data);
+        adr_stack newNode = (adr_stack)malloc(sizeof(NodeStack));
+        newNode->data = copied;
+        strcpy(newNode->kategoriNama, src->kategoriNama);
+        newNode->next = reversed;
+        reversed = newNode;
+        src = src->next;
+    }
+    while (reversed != Nil) {
+        adr_stack next = reversed->next;
+        adr_stack newNode = (adr_stack)malloc(sizeof(NodeStack));
+        newNode->data = clonePesananStack(reversed->data);
+        strcpy(newNode->kategoriNama, reversed->kategoriNama);
+        newNode->next = head;
+        head = newNode;
+        free(reversed);
+        reversed = next;
+    }
+	return head;
+}
+
 void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
 	printQueue(*Q);
 	if (Q->front == Nil) return;
@@ -247,13 +291,13 @@ void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
 	Pelanggan selected = current->dataPelanggan;
 	masukkanListKeStack(selected.listPesanan, stackP);
 	printf("Pesanan atas nama '%s' telah masuk daftar antar.\n", selected.namaPelanggan);
-	
 	for (int i = 0; i < MAX_MEJA; i++) {
-		if (!meja[i].isTersedia &&
-		strcmp(meja[i].jam_kosong, selected.jam_kedatangan) == 0 &&
-		meja[i].stackPesanan == Nil) {
-			meja[i].stackPesanan = *stackP;
-		}
+	    if (!meja[i].isTersedia &&
+	        strcmp(meja[i].jam_kosong, selected.jam_kedatangan) == 0 &&
+	        meja[i].stackPesanan == Nil) {
+	
+	        meja[i].stackPesanan = cloneStack(*stackP);
+	    }
 	}
 	if (prev == Nil) {
         Q->front = current->next;
@@ -304,7 +348,7 @@ void prosesPengantaran (Meja meja []) {
     	prev = &current->next;
     	current = current->next;
 	}
-	if (current = Nil) {
+	if (current == Nil) {
         printf("Kategori tidak ditemukan di meja tersebut.\n");
         return;
     }
