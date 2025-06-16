@@ -53,9 +53,11 @@ boolean is_Empty (adr_stack P) {
 	return (P == Nil);
 }
 
-void copyListPesanan(adr_pesanan head, Kategori *S) {
-    CreateStack(S);
-
+void copyListPesanan(adr_pesanan head, adr_stack *S) {
+    //inisialisasi stack utama
+	CreateStack(S);
+	
+	//inisialisasi 3 stack kategori
     Kategori appetizerStack;
     Kategori mainStack;
     Kategori dessertStack;
@@ -66,12 +68,16 @@ void copyListPesanan(adr_pesanan head, Kategori *S) {
 
     adr_pesanan curr = head;
     while (curr != Nil) {
+    	Menu tempMenu;
+    	strcpy (tempMenu.namaMenu, curr->data.namaMenu);
+    	tempMenu.qty = curr->data.jumlah;
+    	
         if (strcmp(curr->data.kategori, "appetizer") == 0) {
-            pushKategori(&appetizerStack, curr->data.namaMenu, curr->data.jumlah);
+            pushMenu(&appetizerStack, tempMenu);
         } else if (strcmp(curr->data.kategori, "main") == 0) {
-            pushKategori(&mainStack, curr->data.namaMenu, curr->data.jumlah);
+            pushMenu(&mainStack, tempMenu);
         } else if (strcmp(curr->data.kategori, "dessert") == 0) {
-            pushKategori(&dessertStack, curr->data.namaMenu, curr->data.jumlah);
+            pushMenu(&dessertStack, tempMenu);
         }
         curr = curr->next;
     }

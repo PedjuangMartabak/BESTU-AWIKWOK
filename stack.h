@@ -37,7 +37,7 @@ void printStackKategori (Kategori S, const char *judulKategori);
 //STACK UTAMA
 void CreateStack (adr_stack *P);
 boolean is_Empty (adr_stack P);
-void copyListPesanan(adr_pesanan head, Kategori *S);
+void copyListPesanan(adr_pesanan head, adr_stack *S);
 void push(adr_stack *top, Kategori data, const char *kategoriNama);
 Kategori Pop (adr_stack *top);
 void printAllPesanan (adr_stack P);
