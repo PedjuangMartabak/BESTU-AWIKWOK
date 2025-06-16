@@ -54,6 +54,7 @@ int main() {
                 break;
             case 3:
             	printf("Proses Pengantaran Makanan\n");
+            	prosesPengantaran(tables);
                 break;
             case 4:
             	printf("Cetak Bills\n");

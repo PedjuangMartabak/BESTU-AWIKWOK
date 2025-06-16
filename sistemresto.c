@@ -27,12 +27,14 @@ void findMatch (treeAddress node, const char* input, treeAddress hasil[], int *c
         (*count)++;
     }
     findMatch (node->fs, input, hasil, count, maxCount);
-    findMatch (node->fs, input, hasil, count, maxCount);
+    findMatch (node->nb, input, hasil, count, maxCount);
 }
 
 treeAddress inputItem (treeAddress root) {
     char input[50];
     printf("\nMasukkan nama menu (sebagian atau lengkap): ");
+    while ((getchar()) != '\n');
+    fflush(stdout);
     fgets(input, sizeof(input), stdin);
     input[strcspn(input, "\n")] = '\0';
 
@@ -87,7 +89,7 @@ void PushCategory (adr_stack *orders, treeAddress menuItem, int qty) {
         m.qty = qty;
         pushMenu(&current->data, m);
     }
-    printf("✓ %s (%d) ditambahkan ke pesanan.\n", menuItem->name, qty);
+    printf("%s (%d) ditambahkan ke pesanan.\n", menuItem->name, qty);
 }
 
 void getOrder (treeAddress root, adr_pesanan *listPesanan) {
@@ -115,10 +117,10 @@ void getOrder (treeAddress root, adr_pesanan *listPesanan) {
         p.jumlah = qty;
         p.hargaSatuan = (int) selectedItem->price;
         addPesanan(listPesanan, p);
-        printf("✓ %s (%d) ditambahkan ke daftar pesanan.\n", p.namaMenu, p.jumlah);
+        printf("%s (%d) ditambahkan ke daftar pesanan.\n", p.namaMenu, p.jumlah);
         printf("Tambah menu lagi? (1 = ya, 0 = tidak): ");
         scanf("%d", &tambah);
-        getchar();
+        while (getchar() != '\n');
     }
     printf("\nRekap Pesanan:\n");
     printPesananList(*listPesanan);
@@ -163,11 +165,11 @@ void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesana
     char jamKosongStr[6];
     sprintf(jamKosongStr, "%02d:%02d", jam, menit);
     if (CariMejaTunggal(meja, p.total_orang, &indeksTunggal)) {
-    	printf("✓ Meja tunggal #%d dialokasikan.\n", meja[indeksTunggal].nomor);
+    	printf("Meja tunggal #%d dialokasikan.\n", meja[indeksTunggal].nomor);
     	meja[indeksTunggal].isTersedia = false;
     	strcpy(meja[indeksTunggal].jam_kosong, jamKosongStr);
 	} else if (CariGabunganMeja(meja, p.total_orang, indeksGabungan, &jumlahGabungan)) {
-		printf("✓ Gabungan meja dialokasikan: ");
+		printf("Gabungan meja dialokasikan: ");
 		for (int i = 0; i < jumlahGabungan; i++) {
 			printf("#%d ", meja[indeksGabungan[i]].nomor);
             meja[indeksGabungan[i]].isTersedia = false;
@@ -175,12 +177,12 @@ void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesana
 		}
 		printf("\n");
 	} else {
-		printf("✗ Tidak tersedia meja untuk %d orang saat ini.\n", p.total_orang);
+		printf("Tidak tersedia meja untuk %d orang saat ini.\n", p.total_orang);
         return;
 	}
     
     enqueue(Q, p);
-    printf("✓ Reservasi berhasil masuk antrian.\n");
+    printf("Reservasi berhasil masuk antrian.\n");
 }
 
 void masukkanListKeStack (adr_pesanan listP, adr_stack *stackP) {
@@ -239,12 +241,12 @@ void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
     	i++;
 	}
 	if (current == Nil) {
-		printf("✗ Nomor tidak ditemukan.\n");
+		printf("Nomor tidak ditemukan.\n");
         return;
 	}
 	Pelanggan selected = current->dataPelanggan;
 	masukkanListKeStack(selected.listPesanan, stackP);
-	printf("✓ Pesanan atas nama '%s' telah masuk daftar antar.\n", selected.namaPelanggan);
+	printf("Pesanan atas nama '%s' telah masuk daftar antar.\n", selected.namaPelanggan);
 	
 	for (int i = 0; i < MAX_MEJA; i++) {
 		if (!meja[i].isTersedia &&
@@ -284,7 +286,7 @@ void prosesPengantaran (Meja meja []) {
     scanf("%d", &noMeja);
     getchar();      
 	if (noMeja < 1 || noMeja > MAX_MEJA || meja[noMeja - 1].isTersedia || meja[noMeja - 1].stackPesanan == Nil) {
-        printf("❌ Meja tidak valid atau tidak memiliki pesanan.\n");
+        printf("Meja tidak valid atau tidak memiliki pesanan.\n");
         return;
     }
     adr_stack current = meja[noMeja - 1].stackPesanan;
@@ -303,7 +305,7 @@ void prosesPengantaran (Meja meja []) {
     	current = current->next;
 	}
 	if (current = Nil) {
-        printf("❌ Kategori tidak ditemukan di meja tersebut.\n");
+        printf("Kategori tidak ditemukan di meja tersebut.\n");
         return;
     }
     *prev = current->next;
@@ -312,5 +314,5 @@ void prosesPengantaran (Meja meja []) {
 	}
 	free(current); // hapus kategori dari stack
 	
-	printf("✓ Makanan kategori %s sudah diantar ke meja #%d.\n", slctKategori, noMeja);
+	printf("Makanan kategori %s sudah diantar ke meja #%d.\n", slctKategori, noMeja);
 }
