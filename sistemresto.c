@@ -302,12 +302,6 @@ void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
 	        printf("DEBUG: Stack berhasil disalin ke meja %d\n", meja[i].nomor);
 	    }
 	}
-	if (prev == Nil) {
-        Q->front = current->next;
-    } else {
-        prev->next = current->next;
-    }
-    free(current); // hapus dari queue
 }
 
 void printSemuaStackMeja(Meja meja[]) {
