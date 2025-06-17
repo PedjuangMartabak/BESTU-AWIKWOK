@@ -167,16 +167,38 @@ void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesana
     printf("Nama pelanggan: ");
     fgets(p.namaPelanggan, sizeof(p.namaPelanggan), stdin);
     p.namaPelanggan[strcspn(p.namaPelanggan, "\n")] = '\0';
-    printf("No. Telepon: ");
-    fgets(nomorHp, sizeof(nomorHp), stdin);
-    nomorHp[strcspn(nomorHp, "\n")] = '\0'; 
-    for (int i = 0; i < 15 && nomorHp[i] != '\0'; i++) {
-        if (isdigit(nomorHp[i])) {
-            p.noTelp[i] = nomorHp[i] - '0';
-        } else {
-            p.noTelp[i] = 0;
+    
+    // Validasi nomor telepon
+    int valid = 0;
+    while (!valid) {
+        printf("No. Telepon (minimal 12 digit angka): ");
+        fgets(nomorHp, sizeof(nomorHp), stdin);
+        nomorHp[strcspn(nomorHp, "\n")] = '\0';
+
+        // Cek panjang minimal 12 digit
+        if (strlen(nomorHp) < 12) {
+            printf("Nomor telepon harus minimal 12 digit.\n");
+            continue;
+        }
+
+        // Cek semua karakter adalah angka
+        valid = 1;
+        for (int i = 0; i < strlen(nomorHp); i++) {
+            if (!isdigit(nomorHp[i])) {
+                valid = 0;
+                printf("Nomor telepon hanya boleh berisi angka.\n");
+                break;
+            }
+        }
+
+        if (valid) {
+            // Konversi ke array integer
+            for (int i = 0; i < 15 && nomorHp[i] != '\0'; i++) {
+                p.noTelp[i] = nomorHp[i] - '0';
+            }
         }
     }
+    
     printf("Jumlah orang: ");
     scanf("%d", &p.total_orang);
     clearInputBuffer();
