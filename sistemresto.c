@@ -437,6 +437,11 @@ void prosesPengantaran (Meja meja [], PriorityQueue Q) {
 		printf("Masukkan kategori yang telah diantar: ");
 	    fgets(slctKategori, sizeof(slctKategori), stdin);
 	    slctKategori[strcspn(slctKategori, "\n")] = '\0';
+	    
+	    // biar ga sensitif
+	    char lowerKategori[20];
+		toLowercase(lowerKategori, slctKategori);
+		
 	    adr_stack *prev = &meja[noMeja - 1].stackPesanan;
 	    current = *prev;
 	    while (current != Nil && strcmp(current->kategoriNama, slctKategori) != 0) {
