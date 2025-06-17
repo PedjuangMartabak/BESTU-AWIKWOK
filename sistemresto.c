@@ -51,30 +51,43 @@ treeAddress inputItem (treeAddress root) {
     
     char input[50];
     printf("\nMasukkan nama menu (sebagian atau lengkap): ");
-    clearInputBuffer();
     fgets(input, sizeof(input), stdin);
-    input[strcspn(input, "\n")] = '\0';
+    input[strcspn(input, "\n")] = '\0';  // Hapus newline
+
+    // Jika input kosong, kembalikan NULL
+    if (strlen(input) == 0) {
+        printf("Input tidak valid.\n");
+        return NULL;
+    }
 
     treeAddress match[10];
     int matchCount = 0;
     findMatch(root, input, match, &matchCount, 10);
+    
     if (matchCount == 0) {
         printf("Menu tidak ditemukan.\n");
-        return Nil;
+        return NULL;
     } else if (matchCount == 1) {
+        printf("Menu ditemukan: %s (Rp%.2f)\n", match[0]->name, match[0]->price);
         return match[0];
     } else {
         printf("Ditemukan beberapa menu:\n");
         for (int i = 0; i < matchCount; i++) {
             printf("%d. %s (Rp%.2f)\n", i + 1, match[i]->name, match[i]->price);
         }
+        
         int choice;
-        printf("Pilih nomor menu: ");
-        scanf("%d", &choice);
-        getchar();
+        printf("Pilih nomor menu (1-%d): ", matchCount);
+        if (scanf("%d", &choice) != 1) {  // Cek jika input bukan angka
+            clearInputBuffer();
+            printf("Input tidak valid. Harap masukkan angka.\n");
+            return NULL;
+        }
+        clearInputBuffer();
+        
         if (choice < 1 || choice > matchCount) {
             printf("Pilihan tidak valid.\n");
-            return Nil;
+            return NULL;
         }
         return match[choice - 1];
     }
