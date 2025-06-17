@@ -7,6 +7,7 @@
 #include "meja.h"
 #include "boolean.h"
 
+void clearInputBuffer();
 void toLowercase (char *hasil, const char *input);
 boolean cekIsiKata (const char* kalimat, const char *kataIsi);
 void findMatch (treeAddress node, const char* input, treeAddress hasil[], int *count, int maxCount);
@@ -19,7 +20,7 @@ void printAllQueue(PriorityQueue Q);
 Kategori clonePesananStack (Kategori original);
 adr_stack cloneStack (adr_stack src);
 void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]);
-void printSemuaStackMeja(Meja meja[]);
-void prosesPengantaran (Meja meja []);
+void printSemuaStackMeja(Meja meja[], PriorityQueue Q);
+void prosesPengantaran (Meja meja [], PriorityQueue Q);
 
 #endif

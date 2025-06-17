@@ -21,6 +21,8 @@ typedef struct Pelanggan {
     int noTelp[15];
     int total_orang;
     char jam_kedatangan[6];
+    int no_meja[3];
+    int jmlMeja;
 	adr_pesanan listPesanan;
 }Pelanggan;
 
