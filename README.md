@@ -1,4 +1,4 @@
-# Sistem Reservasi Restoran Fine Dining
+z# Sistem Reservasi Restoran Fine Dining
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![C Version](https://img.shields.io/badge/C-99%2F11-yellowgreen)
@@ -46,10 +46,14 @@ make
 
 ## Menu Utama
 ```bash
-=== SISTEM RESTORAN ===
+=== APLIKASI RESTORAN ===
 1. Tambah Reservasi
-2. Proses Antrian
-3. Keluar
+2. Proses Kedatangan
+3. Proses Kedatangan Makanan
+4. Cetak Bills
+5. Tinjau Ulang Antrean
+6. Manage Menu
+7. Keluar
 ```
 
 ## Spesifikasi Teknis
