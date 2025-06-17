@@ -4,15 +4,15 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o meja.o menu_tree.o pesanan.o queue.o sistemresto.o stack.o
-LINKOBJ  = main.o meja.o menu_tree.o pesanan.o queue.o sistemresto.o stack.o
-LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc
-INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
-CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
+OBJ      = main.o meja.o menu_tree.o pesanan.o queue.o sistemresto.o stack.o struk.o
+LINKOBJ  = main.o meja.o menu_tree.o pesanan.o queue.o sistemresto.o stack.o struk.o
+LIBS     = -L"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/lib" -L"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/include" -I"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
+CXXINCS  = -I"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/include" -I"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"D:/Kepentingan/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
 BIN      = Restoran.exe
 CXXFLAGS = $(CXXINCS) 
 CFLAGS   = $(INCS) 
-DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
+DEL      = D:\Kepentingan\Dev-Cpp\devcpp.exe INTERNAL_DEL
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -44,3 +44,6 @@ sistemresto.o: sistemresto.c
 
 stack.o: stack.c
 	$(CC) -c stack.c -o stack.o $(CFLAGS)
+
+struk.o: struk.c
+	$(CC) -c struk.c -o struk.o $(CFLAGS)
