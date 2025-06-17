@@ -1,0 +1,10 @@
+=== STRUK RESTO ===
+Nama Pelanggan: budi
+No. Telepon: 125234213439920
+Jam Reservasi: 12:53
+Selesai: 14:53
+------------------
+Pesanan:
+- Sate Wagyu 	(1 x Rp40000) = Rp40000
+------------------
+TOTAL: Rp40000
