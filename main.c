@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "sistemresto.h"
+#include "struk.h"
 
 void MainMenuDisplay() {
     printf("======= APLIKASI RESTORAN ======\n");
@@ -57,8 +58,19 @@ int main() {
             	prosesPengantaran(tables);
                 break;
             case 4:
-            	printf("Cetak Bills\n");
-                break;
+            	printf("Cetak Struk\n");
+			    char nama[50];
+			    printf("Masukkan nama pelanggan: ");
+			    fgets(nama, sizeof(nama), stdin);
+			    nama[strcspn(nama, "\n")] = '\0';
+			    
+			    Pelanggan *p = cariPelangganByNama(&antreanReservasi, nama);
+			    if (p != NULL) {
+			        buatStruk(*p);
+			    } else {
+			        printf("Pelanggan tidak ditemukan!\n");
+			    }
+			    break;
             case 5: 
             	printAllQueue(antreanReservasi);
                 break;
