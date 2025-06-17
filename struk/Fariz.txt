@@ -1,0 +1,10 @@
+=== STRUK RESTO ===
+Nama Pelanggan: Fariz
+No. Telepon: 
+Jam Reservasi: 12:50
+Selesai: 14:50
+------------------
+Pesanan:
+- Es Arak Bali 	(7 x Rp65000) = Rp455000
+------------------
+TOTAL: Rp455000

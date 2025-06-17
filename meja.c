@@ -43,15 +43,14 @@ boolean CariGabunganMeja(Meja meja[], int total_orang, int indeks_meja[], int *j
     *jumlah_meja = 0;
     
     // Prioritaskan meja besar terlebih dahulu
-    for (int i = 0; i < MAX_MEJA; i++) {
-        for (int j = 0; j < MAX_MEJA; j++) {
-            if (meja[j].isTersedia && meja[j].kapasitas == (8 - i*2)) {
-                indeks_meja[(*jumlah_meja)++] = j;
-                total_kapasitas += meja[j].kapasitas;
+    for (int kapasitas = 8; kapasitas >= 2; kapasitas -= 2) {
+        for (int i = 0; i < MAX_MEJA && total_kapasitas < total_orang; i++) {
+            if (meja[i].isTersedia && meja[i].kapasitas == kapasitas) {
+                indeks_meja[(*jumlah_meja)++] = i;
+                total_kapasitas += meja[i].kapasitas;
                 if (total_kapasitas >= total_orang) {
                     return true;
                 }
-                break;
             }
         }
     }
@@ -59,32 +58,72 @@ boolean CariGabunganMeja(Meja meja[], int total_orang, int indeks_meja[], int *j
 }
 
 void TambahPesananKeMeja(Meja *meja, Pesanan pesanan) {
-    if (!meja->isTersedia) {
-        adr_stack current = meja->stackPesanan;
-        const char* kategori = pesanan.kategori;  // Misal: "Appetizer"
-        while (current != NULL && strcmp(current->kategoriNama, kategori) != 0) {
-            current = current->next;
+	if (meja == NULL || pesanan.kategori == NULL) {
+        printf("Error: Meja atau pesanan tidak valid.\n");
+        return;
+    }
+    
+	if (meja == NULL) {
+        printf("Error: Meja tidak valid.\n");
+        return;
+    }
+	
+	if (meja->isTersedia) {
+        printf("Error: Meja %d belum dipesan. Pesanan ditolak.\n", meja->nomor);
+        return;
+    }
+
+    adr_stack current = meja->stackPesanan;
+    const char* kategori = pesanan.kategori;
+    
+    // Cari stack kategori yang sesuai
+    while (current != NULL && strcmp(current->kategoriNama, kategori) != 0) {
+        current = current->next;
+	}
+	
+	// Jika kategori belum ada, buat stack baru
+    if (current == NULL) {
+        Kategori newKategori;
+        CreateKategori(&newKategori);
+        Menu m;
+        strcpy(m.namaMenu, pesanan.namaMenu);
+        m.qty = pesanan.jumlah;
+        pushMenu(&newKategori, m);
+
+        // Push kategori baru ke stack meja
+        adr_stack newStackNode = (adr_stack)malloc(sizeof(NodeStack));
+        if (newStackNode == NULL) {
+            printf("Error: Alokasi memori gagal!\n");
+            return;
         }
-        
-        //Error Handle Buat stack baru jika kategori belum ada
-        if (current == NULL) {
-            Kategori newKategori;
-            CreateKategori(&newKategori);
-            pushMenu(&newKategori, (Menu){.qty = pesanan.jumlah});
-            strcpy(newKategori.top->info.namaMenu, pesanan.namaMenu);
-            push(&meja->stackPesanan, newKategori, kategori);
-        } else {
-            Menu m;
-            strcpy(m.namaMenu, pesanan.namaMenu);
-            m.qty = pesanan.jumlah;
-            pushMenu(&current->data, m);
-        }
+        newStackNode->data = newKategori;
+        strcpy(newStackNode->kategoriNama, kategori);
+        newStackNode->next = meja->stackPesanan;
+        meja->stackPesanan = newStackNode;
+    } else {
+        // Tambahkan menu ke kategori yang sudah ada
+        Menu m;
+        strcpy(m.namaMenu, pesanan.namaMenu);
+        m.qty = pesanan.jumlah;
+        pushMenu(&current->data, m);
     }
 }
 
 
-void TambahPesananKeGabunganMeja(Meja meja[], int indeks_meja[], int jumlah_meja, Pesanan pesanan) {
-    for (int i = 0; i < jumlah_meja; i++) {
-        TambahPesananKeMeja(&meja[indeks_meja[i]], pesanan);
+boolean TambahPesananKeGabunganMeja(Meja meja[], int indeks_meja[], int *jumlah_meja, Pesanan pesanan) {
+    *jumlah_meja = 0;
+    int total_kapasitas = 0;
+    int total_orang = pesanan.jumlah;  // Ambil jumlah orang dari pesanan
+
+    // Prioritaskan meja besar terlebih dahulu
+    for (int kapasitas = 8; kapasitas >= 2; kapasitas -= 2) {
+        for (int i = 0; i < MAX_MEJA && total_kapasitas < total_orang; i++) {
+            if (meja[i].isTersedia && meja[i].kapasitas == kapasitas) {
+                indeks_meja[(*jumlah_meja)++] = i;
+                total_kapasitas += meja[i].kapasitas;
+            }
+        }
     }
+    return (total_kapasitas >= total_orang);
 }
+

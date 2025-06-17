@@ -10,6 +10,9 @@ void clearInputBuffer() {
 }
 
 void toLowercase (char *hasil, const char *input) {
+	if (input == NULL || hasil == NULL) return;
+    strncpy(hasil, input, 49);  // Batasi panjang maksimal 49 karakter
+    hasil[49] = '\0';           // Pastikan null-terminated
     int i = 0;
     while (input[i]) {
         hasil[i] = tolower(input[i]);
@@ -19,6 +22,10 @@ void toLowercase (char *hasil, const char *input) {
 }
 
 boolean cekIsiKata (const char* kalimat, const char *kataIsi) {
+	if (kalimat == NULL || kataIsi == NULL || strlen(kalimat) == 0 || strlen(kataIsi) == 0) {
+        return false;
+    }
+    
     char lowerKalimat[100], lowerIsi[100];
     toLowercase(lowerKalimat, kalimat);
     toLowercase(lowerIsi, kataIsi);
@@ -36,6 +43,12 @@ void findMatch (treeAddress node, const char* input, treeAddress hasil[], int *c
 }
 
 treeAddress inputItem (treeAddress root) {
+	
+	if (root == NULL) {
+        printf("Menu kosong atau tidak ditemukan.\n");
+        return NULL;
+    }
+    
     char input[50];
     printf("\nMasukkan nama menu (sebagian atau lengkap): ");
     clearInputBuffer();
@@ -219,9 +232,15 @@ void masukkanListKeStack (adr_pesanan listP, adr_stack *stackP) {
 }
 
 void printAllQueue(PriorityQueue Q) {
+	
 	address current = Q.front;
 	int i = 1;
 	printf("\n=== Daftar Semua Antrean ===\n");
+	
+	if (current == NULL) {
+        printf("Belum ada antrean.\n");
+        return;
+    }
 	while (current != Nil) {
 		Pelanggan p = current->dataPelanggan;
 		printf("%d. %s (Jam: %s, %d orang)\n", i++, p.namaPelanggan, p.jam_kedatangan, p.total_orang);
@@ -312,6 +331,18 @@ void prosesKedatangan(PriorityQueue *Q, adr_stack *stackP, Meja meja[]) {
         printf("DEBUG: Stack berhasil disalin ke meja %d\n", meja[idx].nomor);
     	}
 	}
+	
+	for (int i = 0; i < selected.jmlMeja; i++) {
+        int idx = selected.no_meja[i] - 1;
+        if (!meja[idx].isTersedia && meja[idx].stackPesanan == NULL) {
+            adr_stack clonedStack = cloneStack(*stackP);
+            if (clonedStack != NULL) {
+                meja[idx].stackPesanan = clonedStack;
+            } else {
+                printf("Gagal mengalokasikan stack untuk meja %d\n", meja[idx].nomor);
+            }
+        }
+    }
 }
 
 void printSemuaStackMeja(Meja meja[], PriorityQueue Q) {
@@ -357,6 +388,11 @@ void printSemuaStackMeja(Meja meja[], PriorityQueue Q) {
 }
 
 void prosesPengantaran (Meja meja [], PriorityQueue Q) {
+	if (meja == NULL || Q.front == NULL) {
+        printf("Error: Meja atau antrean tidak valid.\n");
+        return;
+    }
+    
 	int jumlahMeja, noMeja;
 	int yes;
 	char slctKategori[20];
@@ -407,7 +443,7 @@ void prosesPengantaran (Meja meja [], PriorityQueue Q) {
 		printf("Makanan kategori %s sudah diantar ke meja #%d.\n", slctKategori, noMeja);
 		if (meja[noMeja - 1].stackPesanan == Nil) {
     		meja[noMeja - 1].isTersedia = true;
-    		printf("Semua pesanan untuk meja #%d sudah selesai. Meja kini tersedia.\n", noMeja);
+    		printf("Semua pesanan untuk meja #%d sudah selesai.\n", noMeja);
 		}
 	}
 }

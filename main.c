@@ -6,7 +6,7 @@
 #include "struk.h"
 
 void MainMenuDisplay() {
-    printf("======= APLIKASI RESTORAN ======\n");
+    printf("\n======= APLIKASI RESTORAN ======\n");
     printf("1. Tambah Reservasi\n");
     printf("2. Proses Kedatangan\n");
     printf("3. Proses Pengantaran Makanan\n");
@@ -55,7 +55,7 @@ int main() {
                 break;
             case 3:
             	printf("Proses Pengantaran Makanan\n");
-            	prosesPengantaran(tables);
+            	prosesPengantaran(tables, antreanReservasi);
                 break;
             case 4:
             	printf("Cetak Struk\n");
@@ -66,7 +66,7 @@ int main() {
 			    
 			    Pelanggan *p = cariPelangganByNama(&antreanReservasi, nama);
 			    if (p != NULL) {
-			        buatStruk(*p);
+			        buatStruk(*p, &antreanReservasi);
 			    } else {
 			        printf("Pelanggan tidak ditemukan!\n");
 			    }
@@ -84,6 +84,6 @@ int main() {
                 printf("Pilihan tidak valid, coba lagi.\n");
         }
 
-    } while (opt != 6);
+    } while (opt != 7);
     return 0;
 }

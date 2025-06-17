@@ -21,6 +21,6 @@ void PrintMeja(Meja meja[]);
 boolean CariMejaTunggal(Meja meja[], int total_orang, int *indeks);
 boolean CariGabunganMeja(Meja meja[], int total_orang, int indeks_meja[], int *jumlah_meja);
 void TambahPesananKeMeja(Meja *meja, Pesanan pesanan);
-void TambahPesananKeGabunganMeja(Meja meja[], int indeks_meja[], int jumlah_meja, Pesanan pesanan);  
+boolean TambahPesananKeGabunganMeja(Meja meja[], int indeks_meja[], int *jumlah_meja, Pesanan pesanan);
 
 #endif

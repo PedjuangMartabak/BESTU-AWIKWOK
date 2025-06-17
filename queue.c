@@ -12,6 +12,14 @@ boolean isQueueEmpty(PriorityQueue Q){
 }
 
 void enqueue(PriorityQueue *Q, Pelanggan data) {
+	// Validasi format jam (HH:MM)
+    int jam, menit;
+    if (sscanf(data.jam_kedatangan, "%d:%d", &jam, &menit) != 2 || 
+        jam < 0 || jam > 23 || menit < 0 || menit > 59) {
+        printf("Format jam tidak valid (harus HH:MM)\n");
+        return;
+    }
+    
     address newNode = (address)malloc(sizeof(NodeQueue));
     if (!newNode) {
         printf("Memory allocation failed!\n");

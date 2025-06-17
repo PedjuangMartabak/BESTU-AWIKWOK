@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include "struk.h"
 #include "pesanan.h"
+#include <ctype.h>
 
 
 void buatFolderStruk() {
@@ -13,9 +14,21 @@ void buatFolderStruk() {
     }
 }
 
-void buatStruk(Pelanggan p){
+void buatStruk(Pelanggan p, PriorityQueue *Q){
     buatFolderStruk();
-
+	
+	// Bersihkan nama pelanggan untuk nama file
+    char safeName[100];
+    int j = 0;
+    for (int i = 0; p.namaPelanggan[i] && j < sizeof(safeName) - 1; i++) {
+        if (isalnum(p.namaPelanggan[i]) || p.namaPelanggan[i] == ' ') {
+            safeName[j++] = p.namaPelanggan[i];
+        } else {
+            safeName[j++] = '_';
+        }
+    }
+    safeName[j] = '\0';
+    
     char filename[100];
     snprintf(filename, sizeof(filename), "%s/%s.txt", FOLDER_STRUK, p.namaPelanggan);
 
@@ -57,7 +70,11 @@ void buatStruk(Pelanggan p){
     fprintf(file, "------------------\n");
     fprintf(file, "TOTAL: Rp%d\n", countTotalHarga(p.listPesanan));
     fclose(file);
-
+    
+	if (Q != NULL) {
+        enqueue(Q, p);  // Tambahkan ke antrian
+    }
+	
     printf("Struk untuk %s berhasil dibuat di %s\n", p.namaPelanggan, filename);
 
 }
