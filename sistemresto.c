@@ -232,9 +232,38 @@ void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesana
     
     break;  // Input valid
 	}
+	
     printf("Jam kedatangan (HH:MM): ");
-    fgets(p.jam_kedatangan, sizeof(p.jam_kedatangan), stdin);
-    p.jam_kedatangan[strcspn(p.jam_kedatangan, "\n")] = '\0';
+    while (1) {
+    char input[10]; // Buffer lebih besar untuk antisipasi input panjang
+    fgets(input, sizeof(input), stdin);
+    
+    // Hapus newline
+    input[strcspn(input, "\n")] = '\0';
+    
+    // Validasi format dengan sscanf
+    int jam, menit;
+    if (sscanf(input, "%d:%d", &jam, &menit) != 2) {
+        printf("Format tidak valid. Gunakan HH:MM. Contoh: 14:30: ");
+        continue;
+    }
+    
+    // Validasi rentang
+    if (jam < 0 || jam > 23 || menit < 0 || menit > 59) {
+        printf("Jam harus 00-23, menit harus 00-59: ");
+        continue;
+    }
+    
+    // Validasi panjang string input (untuk kasus seperti "1:30" atau "123:456")
+    if (strlen(input) != 5 || input[2] != ':') {
+        printf("Gunakan format 2 digit jam dan menit (contoh: 09:05): ");
+        continue;
+    }
+    
+    // Format valid, simpan dengan leading zero
+    sprintf(p.jam_kedatangan, "%02d:%02d", jam, menit);
+    break;
+}
 
     // input daftar pesanan
     p.listPesanan = Nil;
