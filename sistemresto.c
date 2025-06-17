@@ -200,8 +200,38 @@ void inputReservasi (treeAddress root, PriorityQueue *Q, Meja meja[], adr_pesana
     }
     
     printf("Jumlah orang: ");
-    scanf("%d", &p.total_orang);
-    clearInputBuffer();
+    while (1) {
+    char input[10];
+    fgets(input, sizeof(input), stdin);
+    
+    // Hapus newline jika ada
+    input[strcspn(input, "\n")] = '\0';
+    
+    // Validasi: semua karakter harus digit
+    int valid = 1;
+    for (int i = 0; input[i] != '\0'; i++) {
+        if (!isdigit(input[i])) {
+            valid = 0;
+            break;
+        }
+    }
+    
+    if (!valid || strlen(input) == 0) {
+        printf("Input harus berupa angka positif. Silakan masukkan lagi: ");
+        continue;
+    }
+    
+    // Konversi ke integer
+    p.total_orang = atoi(input);
+    
+    // Validasi angka positif
+    if (p.total_orang <= 0) {
+        printf("Jumlah orang harus lebih dari 0. Silakan masukkan lagi: ");
+        continue;
+    }
+    
+    break;  // Input valid
+	}
     printf("Jam kedatangan (HH:MM): ");
     fgets(p.jam_kedatangan, sizeof(p.jam_kedatangan), stdin);
     p.jam_kedatangan[strcspn(p.jam_kedatangan, "\n")] = '\0';
